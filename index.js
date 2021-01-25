@@ -106,6 +106,7 @@ function getInningScore(inn) {
   }
 }
 
+console.log(getInningScore(inning));
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
@@ -148,16 +149,25 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(score, randomNum, plays) {
+function scoreboard(inningScoreCB, inningCB, plays) {
   let result = [];
-
+  let homeScore = 0;
+  let awayScore = 0;
   for (let i = 0; i < plays; i++) {
-    result.push(`Inning ${i + 1}: Away ${score.Away} - Home ${score.Home}`)
+    let currentInning = inningScoreCB(inningCB);
+    homeScore = homeScore + currentInning.Home;
+    awayScore = awayScore + currentInning.Away; 
+    result.push(`Inning ${i + 1}: Away ${currentInning.Away} - Home ${currentInning.Home}`);
   }
-  return result
+  if (homeScore === awayScore) {
+    result.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`);
+  } else {
+    result.push(`Final Score: Away ${awayScore} - Home ${homeScore}`);
+  }
+  return result;
 }
 
-console.log(scoreboard(getInningScore(inning), inning, 9));
+console.log(scoreboard(getInningScore, inning, 9));
 
 
 
